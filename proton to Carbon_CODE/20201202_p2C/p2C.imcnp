@@ -1,0 +1,56 @@
+proton to Carbon
+c mcnpx i=p2C.imcnp o=p2C.omcnp runtpe=p2C.rmcnp
+c proton enegy=7MeV Carbon x,y=5cmthickness=22nm
+c --------------------------------------------------------------------------
+c cell
+100 1 -2.27 -1000 imp:h=1 $Carbon
+c
+200 0   -2000 1000 imp:h=1 $vacuum volum
+c
+900 0   2000 imp:h=0
+
+c --------------------------------------------------------------------------
+c surface
+c series 1xxx -target
+1000 rpp  0 22.0264e-7  -2.5 2.5  -2.5 2.5 $carbon
+c series 2xxx -calculate volum
+2000 rpp  -5 5  -5 5  -5 5 $vacuum volum
+c
+9000 rpp -10 10  -10 10  -10 10 $
+
+c --------------------------------------------------------------------------
+c part3
+c target
+c Carbon , rho=2.27 g/cc 
+m1 6012  1
+c
+tmesh
+ rmesh11:h flux
+ cora11 -20 10i 20
+ corb11 0 10i 40
+ corc11 -20 10i 20
+endmd
+c
+fc305 x,y,z=0,0,0
+f305:h 0 0 0 0.1
+e305 6.99 4i 7.01
+fc315 x,y,z=22.0264e-7,0,0
+f315:h 22.0264e-7 0 0 0.1
+e315 6.99 4i 7.01
+fc325 x,y,z=44e-7,0,0
+f325:h 44e-7 0 0 0.1
+e325 6.99 4i 7.01
+fc335 x,y,z=44e-7,1,1
+f335:h 44e-7 1 1 0.1
+e335 6.99 4i 7.01
+c
+mode h
+nps 1e8
+c 
+sdef par=H dir=1 erg=7 pos=-1 0 0 vec=1 0 0 x=-1 y=d1 z=d2
+si1 -2.5 2.5
+sp1 0 1
+si2 -2.5 2.5
+sp2 0 1
+
+

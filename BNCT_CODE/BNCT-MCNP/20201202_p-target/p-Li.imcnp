@@ -1,0 +1,55 @@
+proton to Li Target
+c mcnpx i=p-Li.imcnp o=p-Li.omcnp runtpe=p-Li.rmcnp
+c proton enegy=3.5MeV Li diameter=10cmthickness=290um
+c --------------------------------------------------------------------------
+c cell
+100 1 -0.534 -1000 imp:n,p,h=1 $Li target
+c
+200 0   -2000 1000 imp:n,p,h=1 $proton tube
+c
+300 0   -3000 2000 1000 imp:n,p,h=1 $BSA
+c
+900 0   -9000 3000 2000 imp:n,p,h=1
+901 0   9000 imp:n,p,h=0
+
+c --------------------------------------------------------------------------
+c surface
+c series 1xxx -target
+1000 rcc 0 0 0  0 -0.029 0  5 $Li-target di=10cm th=290um
+c series 2xxx -proton tube
+2000 rcc 0 0 0  0 -40 0  5 $vacuum
+c series 3xxx -BSA
+3000 rpp  -20 20  0 40  -20 20 $vacuum
+c
+9000 rpp -50 50  -50 50  -50 50 $
+
+c --------------------------------------------------------------------------
+c part3
+c target
+c Lithium , rho=0.534 g/cc 
+m1 3007  1
+c
+tmesh
+ rmesh11:n flux
+ cora11 -20 10i 20
+ corb11 0 10i 40
+ corc11 -20 10i 20
+endmd
+c
+fc305 x,y,z=0,0,0
+f305:n 0 0 0 0
+e305 1e-5 60log 10
+fc315 x,y,z=0,2,0
+f315:n 0 2 0 0
+e315 1e-5 60log 10
+fc325 x,y,z=0,1.4,1.4
+f325:n 0 1.4 1.4 0
+e325 1e-5 60log 10
+c
+mode n p h
+ctme 30 
+cut:p j 1 
+c 
+sdef par=H dir=1 erg=3.5 pos=0 -10 0 vec=0 1 0 rad=d6 axs=0 1 0 ext=0.1
+si6 0 5
+sp6 -21 1
